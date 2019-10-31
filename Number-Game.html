@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" >
+	<head>
+	  <meta charset="UTF-8">
+	  <title>Number Game</title>
+		<link rel="stylesheet" href="style.css">  
+	</head>
+<body>
+
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  
+  <a href="#">User has 1000 INR when he starts the game</a>
+  <a href="#">Every Play is charged 100 INR</a>
+  <a href="#">Game is over if user has less than 100 INR</a>
+  <a href="#">Every try generates three random numbers</a>
+  <a href="#">If all the numbers are odd/even (eg. 2 4 6), user gets 300 INR</a>
+  <a href="#">If the numbers are in sequence with difference of 1 in any order (eg. 2 3 4 or 3 2 4 or 4 6 5), user gets 800 INR</a>
+  <a href="#">If all the numbers are same (eg. 4 4 4), user gets 1000 INR</a>
+  <a href="#">Else Player gets no money</a>
+  <a href="#">Refresh the Browser to play Again</a>
+</div>
+
+<span class="Right-menu" style="font-size:30px; cursor:pointer" onclick="openNav()">&#9776; Rules</span>
+<script>
+function openNav() {
+  document.getElementById("mySidenav").style.width = "750px";
+}
+
+function closeNav() {
+  document.getElementById("mySidenav").style.width = "0";
+}
+</script>
+
+<div id="body">
+	<h1 id="title">NUMBER GAME</h1>
+	  <p id="moneyLeft"></p>
+	  <div id="wrapper">
+	  <div id ="randomNumbers1" class="box">0</div>
+	  <div id ="randomNumbers2" class="box">0</div>
+	  <div id ="randomNumbers3" class="box">0</div>
+		<i class="justify"></i>
+	  </div>
+	<span id="CalculatedAmount"></span>
+	<br><br>
+	<section>
+		<button id="Message" class="button" type="button" onclick="getRndInteger(0,10)">Let's Play</button>
+	</section>
+	<br><br>
+
+<script>
+			var  INR= 1000;
+			document.getElementById('moneyLeft').innerHTML = "You have " + INR + " INR";
+		function getRndInteger(min, max) {
+				var d1 = Math.floor(Math.random() * (max - min)) + min;
+				var d2 = Math.floor(Math.random() * (max - min)) + min;
+				var d3 = Math.floor(Math.random() * (max - min)) + min;
+				
+				document.getElementById('randomNumbers1').innerHTML = d1;
+				document.getElementById('randomNumbers2').innerHTML = d2;
+				document.getElementById('randomNumbers3').innerHTML = d3 ;
+						
+		  if((((d1%2)==0) && ((d2%2)==0) && ((d3%2)==0))&& ((d1!=d2) || (d1!=d3))){
+				INR+=200;
+				document.getElementById('moneyLeft').innerHTML = "You have " + (INR) + " INR";
+				document.getElementById('CalculatedAmount').innerHTML = "You have won <<<< 300 INR >>>> all the numbers are even";
+			}
+			else if((((d1%2)!=0) && ((d2%2)!=0) && ((d3%2)!=0))&& ((d1!=d2) || (d1!=d3))){
+				INR+=200;
+				document.getElementById('moneyLeft').innerHTML = "You have " + (INR) + " INR";
+				document.getElementById('CalculatedAmount').innerHTML = "You have won <<<< 300 INR >>>> all the numbers are odd";
+			}
+			else if((d1==d2)&& (d1==d3)){
+				INR+=900;
+				document.getElementById('moneyLeft').innerHTML = "You have " + (INR) + " INR";
+				document.getElementById('CalculatedAmount').innerHTML = "You have won <<<< 1000 INR >>>> all the numbers are same";
+			}
+			else if((((Math.abs(d1-d2)==1)&&(Math.abs(d2-d3)==1))||((Math.abs(d1-d3)==1)&&(Math.abs(d2-d3)==1))||((Math.abs(d1-d2)==1)&&(Math.abs(d1-d3)==1))) && ((d1!=d2) && (d1!=d3) && (d2!=d3)))
+			{
+				INR+=700;
+				document.getElementById('moneyLeft').innerHTML = "You have " + (INR) + " INR";
+				document.getElementById('CalculatedAmount').innerHTML = "You have won <<<< 800 INR >>>> as the numbers are in sequence";
+			}
+			else if(INR<=100){
+			document.getElementById('Message').innerHTML = "Game Over Refresh to Play Again !!!";
+				document.getElementById('Message').disabled=true;}
+			else {
+				INR-=100;
+				document.getElementById('moneyLeft').innerHTML = "You have " + (INR) + " INR";
+				document.getElementById('CalculatedAmount').innerHTML = "No Win for this time !!!";
+			}
+		}
+</script>
+</div>
+</body>
+</html>
